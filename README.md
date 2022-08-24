@@ -190,10 +190,18 @@ sudo apt-key add keyfile1
 
 In case you uncorrectly adding the wrong key, you can remove it by this command :
 ```
-sudo apt-key del THE_HEXADECIMAL_KEY
+sudo apt-key del THE_KEY
 ```
 
 To identify which key you want to select, use this command first :
 ```
 sudo apt-key list
 ```
+It will shows something like this :
+![image](https://user-images.githubusercontent.com/6629806/186481679-d0c03090-628f-4074-a682-96558d42ae42.png)
+As you can see that I marked 8 digits of key, and that would be part of the key that you use to del the specific key. For example I will delete the RabbitMQ key, so I will run this command :
+```
+sudo apt-key del 6026DFCA
+```
+
+
