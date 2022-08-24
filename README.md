@@ -204,4 +204,16 @@ As you can see that I marked 8 digits of key_id, and that would be part of the k
 sudo apt-key del 6026DFCA
 ```
 
+And another thing that may cause you an error is, adding some repo that already outdated or not maintained or already missing. When you came in that situation it more likely you will face an error when you run the `apt update` command. We have to remove the non-existing package so the update will run smoothly.
+
+You can remove the PPA from the sources list where these PPAs are stored. PPA repositories are store in the form of PPA_Name.list. Use the following command to see all the PPAs added in your system:
+```
+ls /etc/apt/sources.list.d
+```
+
+Look for your desire PPA here and then remove the .list file associated with the PPA using the following command:
+```
+sudo rm -i /etc/apt/sources.list.d/PPA_Name.list
+```
+
 
