@@ -38,3 +38,17 @@ And it will shows something like this:
 
 ![image](https://user-images.githubusercontent.com/6629806/186396380-ca0bff0d-8fd3-464b-bbe3-5a31c3cf8ab0.png)
 
+
+**Preparation**
+Before we installing RabbitMQ, lets make sure configuration of your host is correct, because it can cause an error if something missing.
+
+Type `hostname` in your terminal, you'll see your hostname, after that edit your host and make sure the IP Address and the hostname are correctly mapped. Edit your host file with nano editor :
+
+ ```
+ nano /etc/hosts
+ ```
+Here is my configuration looks like :
+![image](https://user-images.githubusercontent.com/6629806/186467800-ebaeff1d-b8e4-45d3-beed-acad4b4c7613.png)
+
+
+
