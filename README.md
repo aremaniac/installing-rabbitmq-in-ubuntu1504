@@ -97,4 +97,103 @@ Install rabbitmq-server and its dependencies :
 sudo apt-get install rabbitmq-server -y --fix-missing
 ```
 
+Wait until the installation finished.
 
+Check the status of RabbitMQ :
+```
+status rabbitmq-server.service
+```
+
+Check if RabbitMQ is enabled :
+```
+systemctl is-enabled rabbitmq-server.service
+```
+
+To start and stop the server, use the `systemctl` tool. The service name is `rabbitmq-server`:
+```
+# stop the local node
+sudo systemctl stop rabbitmq-server
+
+# start it back
+sudo systemctl start rabbitmq-server
+```
+
+`systemctl status rabbitmq-server` will report service status as observed by systemd (or similar service manager):
+```
+# check on service status as observed by service manager
+sudo systemctl status rabbitmq-server
+```
+
+It will produce output similar to this:
+```
+Redirecting to /bin/systemctl status rabbitmq-server.service
+● rabbitmq-server.service - RabbitMQ broker
+   Loaded: loaded (/usr/lib/systemd/system/rabbitmq-server.service; enabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/rabbitmq-server.service.d
+           └─limits.conf
+   Active: active (running) since Wed 2021-05-07 10:21:32 UTC; 25s ago
+ Main PID: 957 (beam.smp)
+   Status: "Initialized"
+   CGroup: /system.slice/rabbitmq-server.service
+           ├─ 957 /usr/lib/erlang/erts-10.2/bin/beam.smp -W w -A 64 -MBas ageffcbf -MHas ageffcbf -MBlmbcs 512 -MHlmbcs 512 -MMmcs 30 -P 1048576 -t 5000000 -stbt db -zdbbl 128000 -K true -- -root /usr/lib/erlang -progname erl -- -home /var/lib/rabbitmq -- ...
+           ├─1411 /usr/lib/erlang/erts-10.2/bin/epmd -daemon
+           ├─1605 erl_child_setup 400000
+           ├─2860 inet_gethost 4
+           └─2861 inet_gethost 4
+
+Dec 26 10:21:30 localhost.localdomain rabbitmq-server[957]: ##  ##
+Dec 26 10:21:30 localhost.localdomain rabbitmq-server[957]: ##  ##      RabbitMQ 3.8.17. Copyright (c) 2007-2022 VMware, Inc. or its affiliates.
+Dec 26 10:21:30 localhost.localdomain rabbitmq-server[957]: ##########  Licensed under the MPL 2.0. Website: https://www.rabbitmq.com/
+Dec 26 10:21:30 localhost.localdomain rabbitmq-server[957]: ######  ##
+Dec 26 10:21:30 localhost.localdomain rabbitmq-server[957]: ##########  Logs: /var/log/rabbitmq/rabbit@localhost.log
+Dec 26 10:21:30 localhost.localdomain rabbitmq-server[957]: /var/log/rabbitmq/rabbit@localhost_upgrade.log
+Dec 26 10:21:30 localhost.localdomain rabbitmq-server[957]: Starting broker...
+Dec 26 10:21:32 localhost.localdomain rabbitmq-server[957]: systemd unit for activation check: "rabbitmq-server.service"
+Dec 26 10:21:32 localhost.localdomain systemd[1]: Started RabbitMQ broker.
+Dec 26 10:21:32 localhost.localdomain rabbitmq-server[957]: completed with 6 plugins.
+```
+
+**Enable the RabbitMQ Management Dashboard (Optional)**
+You can optionally enable the RabbitMQ Management Web dashboard for easy management.
+```
+sudo rabbitmq-plugins enable rabbitmq_management
+```
+
+The Web service should be listening on TCP port `15672`
+```
+$ sudo ss -tunelp | grep 15672
+```
+
+If you have an active UFW firewall, open both ports 5672 and 15672:
+```
+sudo ufw allow proto tcp from any to any port 5672,15672
+```
+
+Access it by opening the URL `http://[server IP|Hostname]:15672`
+
+By default, the guest user exists and can connect only from localhost. You can login with this user locally with the password “guest”
+
+To be able to login on the network, create an admin user like below:
+```
+sudo rabbitmqctl add_user admin StrongPassword
+sudo rabbitmqctl set_user_tags admin administrator
+```
+
+That's up the tutorial is finished. 
+
+As for the addition, I'll mention some problem solving to errors that you have encounters, here it is:
+
+If you failed when adding the repo keys with the above instruction, you can instead downloading it and import it manually. First copy-paste the key URL to your browser, and you will see some text that contain the key. Save it to a file (for example I name it `keyfile1`) and then import it with this command :
+```
+sudo apt-key add keyfile1
+```
+
+In case you uncorrectly adding the wrong key, you can remove it by this command :
+```
+sudo apt-key del THE_HEXADECIMAL_KEY
+```
+
+To identify which key you want to select, use this command first :
+```
+sudo apt-key list
+```
