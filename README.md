@@ -1,11 +1,14 @@
-# installing-rabbitmq-in-ubuntu1510
-Installing rabbitmq in ubuntu 15.10
+# Installing RabbitMQ on Ubuntu 15. 10
 
 Here is guide and useful links that may help you when installing RabbitMQ on older version of Ubuntu, especially in Ubuntu 15.10.
 
 As far i know there is no tutorial out there that explaining about how to install RabbitMQ in Ubuntu 15.10, and I decided to use tutorial installation for Ubuntu 18.4.
 
-# Install Erlang Package
+I also have tried tutorial for Ubuntu 20.04 and above and it appears did not work, I think because the installation package has too many differences and simple it is not compatible to Ubuntuk 15.10.
+
+Ok here is it :
+
+*** Install Erlang ***
 
 Add the following source list : 
 
