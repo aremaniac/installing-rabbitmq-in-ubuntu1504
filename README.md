@@ -60,7 +60,41 @@ I have tried so many other tutorials and just end up with errors. One of the rea
 
 Following the instruction below i also head up with some errors, but I'll mention it later how to deal with it, in case you face it too.
 
-Ok let's start : 
+Let's start with installing this package :
+```
+sudo apt-get install curl gnupg apt-transport-https -y
+```
 
+Team RabbitMQ's main signing key :
+```
+curl -1sLf "https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA" | sudo gpg --dearmor | sudo tee /usr/share/keyrings/com.rabbitmq.team.gpg > /dev/null
+```
+
+If you follow the instruction in RabbitMQ page, you'll find the steps of adding key and repo for erlang, but we will skip it, because we have already install another version of erlang. So just move to another step.
+
+Cloudsmith: RabbitMQ repository : 
+```
+curl -1sLf https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.9F4587F226208342.key | sudo gpg --dearmor | sudo tee /usr/share/keyrings/io.cloudsmith.rabbitmq.9F4587F226208342.gpg > /dev/null
+```
+
+Add apt repositories maintained by Team RabbitMQ : 
+```
+sudo tee /etc/apt/sources.list.d/rabbitmq.list <<EOF
+## Provides RabbitMQ
+##
+deb [signed-by=/usr/share/keyrings/io.cloudsmith.rabbitmq.9F4587F226208342.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu bionic main
+deb-src [signed-by=/usr/share/keyrings/io.cloudsmith.rabbitmq.9F4587F226208342.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu bionic main
+EOF
+```
+
+Update package indices :
+```
+sudo apt-get update -y
+```
+
+Install rabbitmq-server and its dependencies : 
+```
+sudo apt-get install rabbitmq-server -y --fix-missing
+```
 
 
