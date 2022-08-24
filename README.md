@@ -40,6 +40,7 @@ And it will shows something like this:
 
 
 **Preparation**
+
 Before we installing RabbitMQ, lets make sure configuration of your host is correct, because it can cause an error if something missing.
 
 Type `hostname` in your terminal, you'll see your hostname, after that edit your host and make sure the IP Address and the hostname are correctly mapped. Edit your host file with nano editor :
